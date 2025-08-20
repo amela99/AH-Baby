@@ -1,0 +1,167 @@
+.product-detail-container {
+  margin: auto;
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+.product-main {
+  display: flex;
+  gap: 4rem;
+}
+
+.product-detail-container .product-image {
+  width: 300px;
+  height: 400px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+
+.product-info {
+  flex: 1;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.add-to-cart {
+  background: #a5a58d;
+  border: none;
+  padding: 0.5rem 6rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease, transform 0.2s ease;
+}
+
+.add-to-cart:hover {
+  background: #6b705c;
+  transform: scale(1.05);
+}
+
+.similar-products-title {
+  margin-top: 4rem;
+  font-size: 1.5rem;
+}
+
+.similar-products {
+  display: flex;
+  gap: 4rem;
+}
+
+.similar-product-card {
+  text-decoration: none;
+  background: #fffbf2;
+  box-shadow: 0 2px 12px rgba(163, 184, 108, 0.08);
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.similar-product-card:hover {
+  box-shadow: 0 4px 24px rgba(163, 184, 108, 0.16);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.similar-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #474e33;
+  margin: 1rem 0 0.5rem 0;
+  font-family: "Montserrat", "Arial", sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.similar-price {
+  color: #414438;
+  font-family: "Montserrat", "Arial", sans-serif;
+}
+
+.similar-product-image {
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+/* iPad och mindre laptops */
+@media (max-width: 900px) {
+  .product-main {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .product-detail-container .product-image {
+    width: 400px;
+    height: 220px;
+  }
+  .product-info {
+    padding: 1.2rem 0.5rem;
+    min-width: 180px;
+  }
+
+  .similar-products {
+    gap: 1rem;
+    justify-content: center;
+    padding-bottom: 1rem;
+  }
+  .similar-product-card {
+    max-width: 120px;
+    min-width: 100px;
+    padding: 0.7rem 0.3rem;
+    font-size: 0.9rem;
+  }
+  .similar-product-image {
+    width: 90px;
+    height: 90px;
+    border-radius: 0.5rem;
+  }
+  .similar-name {
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0.2rem 0;
+  }
+  .similar-price {
+    font-size: 0.8rem;
+  }
+}
+
+/* iPhone och små mobiler */
+@media (max-width: 600px) {
+  .product-detail-container {
+    padding: 1rem;
+    margin-top: 1.5rem;
+  }
+  .product-main {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .product-detail-container .product-image {
+    width: 400px;
+    height: 200px;
+  }
+  .product-info {
+    padding: 0.7rem 0.2rem;
+    min-width: 120px;
+  }
+  .similar-products,
+  .similar-products-title {
+    display: none;
+  }
+}
