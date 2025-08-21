@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Basket.css";
 
 const CartItem = ({ item, onRemove, onQuantityChange }) => {
@@ -60,7 +61,9 @@ const Basket = ({ cart = [], removeFromCart, updateQuantity }) => {
         ))
       )}
       <p>Total: {total} SEK</p>
-      <button className="checkout-button">Till kassan</button>
+      <Link to="/checkout" className="checkout-button">
+        Till kassan
+      </Link>
     </div>
   );
 };

@@ -1,0 +1,52 @@
+.search-page {
+  padding: 20px;
+  text-align: center;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.product-card {
+  padding: 15px;
+  border-radius: 5px;
+  background: #fffbf2;
+}
+
+.product-card a {
+  text-decoration: none;
+  color: #474e33;
+}
+
+.product-image {
+  width: 200px;
+  height: 250px;
+  border-radius: 5px;
+}
+
+/*  Anpassning för surfplattor (max 1024px) */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 produkter per rad */
+  }
+}
+
+/*  Anpassning för små surfplattor (max 768px) */
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 produkter per rad */
+  }
+}
+
+/*  Anpassning för mobiltelefoner (max 480px) */
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: repeat(1, 1fr); /* 1 produkt per rad */
+  }
+
+  .product-card {
+    width: 100%;
+  }
+}

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
-import Basket from "../Basket/Basket";
 
 export const Header = ({ cart }) => {
   const [searchTerm, setSearchTerm] = useState("");

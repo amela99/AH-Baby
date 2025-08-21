@@ -4,7 +4,9 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Gallery from "./components/Gallery/Gallery";
 import Details from "./components/Details/Details";
+import Search from "./components/Search/Search";
 import Basket from "./components/Basket/Basket";
+import Checkout from "./components/Checkout/Checkout";
 
 export const App = () => {
   const [cart, setCart] = useState([]);
@@ -87,6 +89,7 @@ export const App = () => {
           path="/products/:url_slug"
           element={<Details addToCart={addToCart} />}
         />
+        <Route path="/search" element={<Search />} />
         <Route
           path="/basket"
           element={
@@ -97,6 +100,7 @@ export const App = () => {
             />
           }
         />
+        <Route path="/checkout" element={<Checkout cart={cart} />} />
       </Routes>
       <Footer />
     </>
