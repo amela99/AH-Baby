@@ -1,0 +1,77 @@
+.confirmation-container {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 40px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.confirmation-container h2 {
+  color: #2c3e50;
+  font-size: 32px;
+  margin-bottom: 25px;
+}
+
+.confirmation-container p {
+  font-size: 18px;
+  color: #34495e;
+  margin: 10px 0;
+}
+
+.confirmation-container .order-number {
+  font-weight: 600;
+  color: #1b7e44;
+  font-size: 20px;
+}
+
+.confirmation-container .email {
+  font-style: italic;
+  color: #34495e;
+}
+
+/* Media Queries */
+
+/* Tablet / iPad (landscape + portrait) */
+@media (max-width: 1024px) {
+  .confirmation-container {
+    max-width: 400px;
+    padding: 30px;
+  }
+
+  .confirmation-container h2 {
+    font-size: 28px;
+  }
+
+  .confirmation-container p {
+    font-size: 16px;
+  }
+
+  .confirmation-container .order-number {
+    font-size: 18px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+  .confirmation-container {
+    max-width: 90%;
+    margin: 50px auto;
+    padding: 20px;
+  }
+
+  .confirmation-container h2 {
+    font-size: 24px;
+  }
+
+  .confirmation-container p {
+    font-size: 14px;
+  }
+
+  .confirmation-container .order-number {
+    font-size: 16px;
+  }
+}

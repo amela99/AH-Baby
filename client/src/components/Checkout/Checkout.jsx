@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Checkout.css";
 
 const Checkout = ({ cart }) => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -30,7 +32,7 @@ const Checkout = ({ cart }) => {
     }
 
     try {
-      const response = await fetch("/api/checkout", {
+      const response = await fetch("/api/cart/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cart, ...formData }),
@@ -39,7 +41,8 @@ const Checkout = ({ cart }) => {
       const data = await response.json();
 
       if (data.success) {
-        alert("Order skickad! Tack för ditt köp.");
+        // Skicka vidare till confirmation-sidan med orderId i URL:en
+        navigate(`/confirmation?orderId=${data.orderId}`);
       } else {
         alert("Checkout misslyckades: " + data.message);
       }
@@ -131,10 +134,9 @@ const Checkout = ({ cart }) => {
           />
           <label>Jag vill ta emot nyhetsbrev</label>
         </div>
-
-        <Link to="/confirmation" className="buy">
+        <button type="submit" className="buy">
           Köp
-        </Link>
+        </button>
       </form>
     </div>
   );

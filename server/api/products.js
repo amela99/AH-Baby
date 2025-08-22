@@ -18,6 +18,34 @@ router.get("/", (req, res) => {
   }
 });
 
+//  Hämta flicka + unisex
+router.get("/flicka", (req, res) => {
+  try {
+    const stmt = db.prepare(`
+      SELECT * FROM products 
+      WHERE gender = 'flicka' OR gender = 'unisex'
+    `);
+    const products = stmt.all();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//  Hämta pojke + unisex
+router.get("/pojke", (req, res) => {
+  try {
+    const stmt = db.prepare(`
+      SELECT * FROM products 
+      WHERE gender = 'pojke' OR gender = 'unisex'
+    `);
+    const products = stmt.all();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.get("/:url_slug", (req, res) => {
   try {
     const stmt = db.prepare("SELECT * FROM products WHERE url_slug = ?");

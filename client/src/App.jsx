@@ -5,8 +5,12 @@ import Footer from "./components/Footer/Footer";
 import Gallery from "./components/Gallery/Gallery";
 import Details from "./components/Details/Details";
 import Search from "./components/Search/Search";
+import New from "./components/Categories/New/New";
+import Girl from "./components/Categories/Girl/Girl";
+import Boy from "./components/Categories/Boy/Boy";
 import Basket from "./components/Basket/Basket";
 import Checkout from "./components/Checkout/Checkout";
+import Confirmation from "./components/Confirmation/Confirmation";
 
 export const App = () => {
   const [cart, setCart] = useState([]);
@@ -90,6 +94,9 @@ export const App = () => {
           element={<Details addToCart={addToCart} />}
         />
         <Route path="/search" element={<Search />} />
+        <Route path="/categories/new" element={<New />} />
+        <Route path="/categories/girl" element={<Girl />} />
+        <Route path="/categories/boy" element={<Boy />} />
         <Route
           path="/basket"
           element={
@@ -101,6 +108,10 @@ export const App = () => {
           }
         />
         <Route path="/checkout" element={<Checkout cart={cart} />} />
+        <Route
+          path="/confirmation"
+          element={<Confirmation setCart={setCart} />}
+        />
       </Routes>
       <Footer />
     </>

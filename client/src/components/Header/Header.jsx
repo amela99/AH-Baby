@@ -45,22 +45,17 @@ export const Header = ({ cart }) => {
         <nav className={`nav-container ${menuOpen ? "open" : ""}`}>
           <ul className="category-list">
             <li>
-              <Link to="/category/flicka" className="category-link">
+              <Link to="/categories/Girl" className="category-link">
                 Flicka
               </Link>
             </li>
             <li>
-              <Link to="/category/pojke" className="category-link">
+              <Link to="/categories/Boy" className="category-link">
                 Pojke
               </Link>
             </li>
             <li>
-              <Link to="/category/presenter" className="category-link">
-                Presenter
-              </Link>
-            </li>
-            <li>
-              <Link to="/category/nyheter" className="category-link">
+              <Link to="/categories/New" className="category-link">
                 Nyheter
               </Link>
             </li>

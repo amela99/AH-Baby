@@ -43,7 +43,7 @@ export const Gallery = ({ addToCart }) => {
   }, [products]);
 
   const sortedProducts = [...displayProducts].sort(
-    (a, b) => new Date(b.publishedDate) - new Date(a.publishedDate)
+    (a, b) => new Date(b.published_date) - new Date(a.published_date)
   );
 
   return (
@@ -80,7 +80,8 @@ export const Gallery = ({ addToCart }) => {
               >
                 Lägg till i varukorgen
               </button>
-              {index === 0 && <span className="badge">Nyhet</span>}
+              {new Date() - new Date(product.published_date) <
+                7 * 24 * 60 * 60 * 1000 && <span className="badge">Nyhet</span>}
             </div>
             <h3 className="card-title">{product.name}</h3>
             <p className="card-price">{product.price}</p>
