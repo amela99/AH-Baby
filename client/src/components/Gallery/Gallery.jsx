@@ -6,6 +6,7 @@ import Hero from "../Hero/Hero";
 export const Gallery = ({ addToCart }) => {
   const [products, setProducts] = useState([]);
   const [displayProducts, setDisplayProducts] = useState([]);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -76,7 +77,7 @@ export const Gallery = ({ addToCart }) => {
               </button>
               <button
                 className="add add-overlay"
-                onClick={() => addToCart(product)}
+                onClick={() => addToCart(product, quantity)}
               >
                 Lägg till i varukorgen
               </button>

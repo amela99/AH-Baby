@@ -103,6 +103,8 @@
   font-size: 1.4rem;
   position: relative;
   transition: color 0.2s, transform 0.2s;
+  border: none;
+  background: white;
 }
 .icon-link:hover {
   color: #a3b86c;

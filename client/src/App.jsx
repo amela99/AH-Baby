@@ -11,9 +11,11 @@ import Boy from "./components/Categories/Boy/Boy";
 import Basket from "./components/Basket/Basket";
 import Checkout from "./components/Checkout/Checkout";
 import Confirmation from "./components/Confirmation/Confirmation";
+import Login from "./components/Login/Login";
 
 export const App = () => {
   const [cart, setCart] = useState([]);
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     fetchCart();
@@ -48,7 +50,6 @@ export const App = () => {
     }
   };
 
-  // Ta bort produkt från varukorgen
   const removeFromCart = async (id) => {
     try {
       const response = await fetch(`/api/cart/remove?productId=${id}`, {
@@ -65,7 +66,6 @@ export const App = () => {
     }
   };
 
-  // Ändra antal i varukorgen
   const updateQuantity = async (id, quantity) => {
     try {
       const response = await fetch(`/api/cart/update`, {
@@ -86,9 +86,9 @@ export const App = () => {
 
   return (
     <>
-      <Header cart={cart} />
+      <Header cart={cart} token={token} setToken={setToken} />
       <Routes>
-        <Route path="/" element={<Gallery />} />
+        <Route path="/" element={<Gallery addToCart={addToCart} />} />
         <Route
           path="/products/:url_slug"
           element={<Details addToCart={addToCart} />}
@@ -112,6 +112,7 @@ export const App = () => {
           path="/confirmation"
           element={<Confirmation setCart={setCart} />}
         />
+        <Route path="/login" element={<Login setToken={setToken} />} />
       </Routes>
       <Footer />
     </>

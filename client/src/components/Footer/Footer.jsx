@@ -70,9 +70,6 @@ export const Footer = () => {
                     <li>
                       <a href="#">Kontakta oss</a>
                     </li>
-                    <li>
-                      <Link to="/Admin/Products">Administration</Link>
-                    </li>
                   </>
                 )}
                 {idx === 1 && (

@@ -47,28 +47,16 @@ const createCustomerOrders = `
   );
 `;
 
-// === Favorites table (user ↔ products) ===
-const createFavorites = `
-  CREATE TABLE IF NOT EXISTS favorites (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
-    product_id INTEGER,
-    created_at TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (product_id) REFERENCES products(id),
-    UNIQUE(user_id, product_id) 
-  );
-`;
-
 // === Users table (for customers + admins) ===
 const createUsers = `
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
+    username TEXT,
     email TEXT UNIQUE,
     password TEXT,
-    role TEXT DEFAULT 'customer',  
-    created_at TEXT
+    admin INTEGER DEFAULT 0,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    token TEXT
   );
 `;
 
@@ -76,7 +64,6 @@ try {
   db.prepare(createTable).run();
   db.prepare(createOrders).run();
   db.prepare(createCustomerOrders).run();
-  db.prepare(createFavorites).run();
   db.prepare(createUsers).run();
 
   console.log("Tables created (if they didn't exist).");
