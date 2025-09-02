@@ -12,10 +12,12 @@ import Basket from "./components/Basket/Basket";
 import Checkout from "./components/Checkout/Checkout";
 import Confirmation from "./components/Confirmation/Confirmation";
 import Login from "./components/Login/Login";
+import Favorites from "./components/Favorites/Favorites";
 
 export const App = () => {
   const [cart, setCart] = useState([]);
   const [token, setToken] = useState("");
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     fetchCart();
@@ -84,11 +86,35 @@ export const App = () => {
     }
   };
 
+  // FAVORITER
+  const addToFavorites = (product) => {
+    setFavorites((prev) => {
+      if (!prev.find((p) => p.id === product.id)) {
+        return [...prev, product];
+      }
+      return prev;
+    });
+  };
+
+  const removeFromFavorites = (productId) => {
+    setFavorites((prev) => prev.filter((p) => p.id !== productId));
+  };
+
   return (
     <>
       <Header cart={cart} token={token} setToken={setToken} />
       <Routes>
-        <Route path="/" element={<Gallery addToCart={addToCart} />} />
+        <Route
+          path="/"
+          element={
+            <Gallery
+              addToCart={addToCart}
+              addToFavorites={addToFavorites}
+              removeFromFavorites={removeFromFavorites}
+              favorites={favorites}
+            />
+          }
+        />
         <Route
           path="/products/:url_slug"
           element={<Details addToCart={addToCart} />}
@@ -113,6 +139,15 @@ export const App = () => {
           element={<Confirmation setCart={setCart} />}
         />
         <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route
+          path="/favorites"
+          element={
+            <Favorites
+              favorites={favorites}
+              removeFromFavorites={removeFromFavorites}
+            />
+          }
+        />
       </Routes>
       <Footer />
     </>

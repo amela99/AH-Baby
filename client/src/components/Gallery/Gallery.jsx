@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import "./Gallery.css";
 import Hero from "../Hero/Hero";
 
-export const Gallery = ({ addToCart }) => {
+export const Gallery = ({
+  addToCart,
+  addToFavorites,
+  removeFromFavorites,
+  favorites,
+}) => {
   const [products, setProducts] = useState([]);
   const [displayProducts, setDisplayProducts] = useState([]);
   const [quantity, setQuantity] = useState(1);
@@ -47,6 +52,16 @@ export const Gallery = ({ addToCart }) => {
     (a, b) => new Date(b.published_date) - new Date(a.published_date)
   );
 
+  const isFavorite = (productId) => favorites.some((p) => p.id === productId);
+
+  const handleFavoriteClick = (product) => {
+    if (isFavorite(product.id)) {
+      removeFromFavorites(product.id);
+    } else {
+      addToFavorites(product);
+    }
+  };
+
   return (
     <>
       <Hero />
@@ -70,10 +85,14 @@ export const Gallery = ({ addToCart }) => {
               </Link>
               <button
                 className="favorite-btn"
-                onClick={() => {}}
-                aria-label="Lägg till i favoriter"
+                onClick={() => handleFavoriteClick(product)}
+                aria-label="Lägg till/ta bort från favoriter"
               >
-                <i className="fa-regular fa-heart"></i>
+                <i
+                  className={`fa-heart ${
+                    isFavorite(product.id) ? "fa-solid" : "fa-regular"
+                  }`}
+                ></i>
               </button>
               <button
                 className="add add-overlay"

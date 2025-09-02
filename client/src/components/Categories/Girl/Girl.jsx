@@ -26,7 +26,7 @@ const Girl = () => {
 
   return (
     <div className="girl-page">
-      <h2>Flickkläder</h2>
+      <h2>BABYKLÄDER FLICKA</h2>
 
       <div className="product-grid">
         {products.map((product) => {

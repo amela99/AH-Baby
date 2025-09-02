@@ -22,7 +22,7 @@ const New = () => {
 
   return (
     <div className="new-page">
-      <h2>Nyheter</h2>
+      <h2>NYHETER</h2>
       <div className="product-grid">
         {newProducts.length === 0 && <p>Inga nya produkter just nu.</p>}
         {newProducts.map((product) => (
