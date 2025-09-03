@@ -34,7 +34,8 @@ export default function Login({ setToken }) {
         alert("Registrering lyckades! Logga in nu.");
         setIsRegister(false);
       } else {
-        setToken(data.token);
+        // Skicka tillbaka token + adminstatus till App.jsx
+        setToken(data.token, data.admin === 1 ? 1 : 0);
 
         if (data.admin === 1) navigate("/admin");
         else navigate("/");

@@ -53,17 +53,17 @@ export const Header = ({ cart, token, setToken }) => {
       <nav className={`nav-container ${menuOpen ? "open" : ""}`}>
         <ul className="category-list">
           <li>
-            <Link to="/categories/Girl" className="category-link">
+            <Link to="/categories/girl" className="category-link">
               Flicka
             </Link>
           </li>
           <li>
-            <Link to="/categories/Boy" className="category-link">
+            <Link to="/categories/boy" className="category-link">
               Pojke
             </Link>
           </li>
           <li>
-            <Link to="/categories/New" className="category-link">
+            <Link to="/categories/new" className="category-link">
               Nyheter
             </Link>
           </li>

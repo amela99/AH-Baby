@@ -13,10 +13,13 @@ import Checkout from "./components/Checkout/Checkout";
 import Confirmation from "./components/Confirmation/Confirmation";
 import Login from "./components/Login/Login";
 import Favorites from "./components/Favorites/Favorites";
+import Products from "./components/Admin/Products";
+import NewProducts from "./components/Admin/NewProducts";
 
 export const App = () => {
   const [cart, setCart] = useState([]);
   const [token, setToken] = useState("");
+  const [isAdmin, setIsAdmin] = useState(0);
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
@@ -40,13 +43,8 @@ export const App = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId: product.id, quantity }),
       });
-
       const data = await response.json();
-      if (data.success) {
-        fetchCart();
-      } else {
-        console.error("Failed to add product:", data.message);
-      }
+      if (data.success) fetchCart();
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }
@@ -58,11 +56,7 @@ export const App = () => {
         method: "DELETE",
       });
       const data = await response.json();
-      if (data.success) {
-        fetchCart();
-      } else {
-        console.error("Kunde inte ta bort produkt:", data.message);
-      }
+      if (data.success) fetchCart();
     } catch (error) {
       console.error("Fel vid borttagning av produkt:", error);
     }
@@ -76,11 +70,7 @@ export const App = () => {
         body: JSON.stringify({ productId: id, quantity }),
       });
       const data = await response.json();
-      if (data.success) {
-        fetchCart();
-      } else {
-        console.error("Kunde inte ändra antal:", data.message);
-      }
+      if (data.success) fetchCart();
     } catch (error) {
       console.error("Fel vid ändring av antal:", error);
     }
@@ -89,9 +79,7 @@ export const App = () => {
   // FAVORITER
   const addToFavorites = (product) => {
     setFavorites((prev) => {
-      if (!prev.find((p) => p.id === product.id)) {
-        return [...prev, product];
-      }
+      if (!prev.find((p) => p.id === product.id)) return [...prev, product];
       return prev;
     });
   };
@@ -102,7 +90,13 @@ export const App = () => {
 
   return (
     <>
-      <Header cart={cart} token={token} setToken={setToken} />
+      <Header
+        cart={cart}
+        token={token}
+        setToken={setToken}
+        isAdmin={isAdmin}
+        favorites={favorites}
+      />
       <Routes>
         <Route
           path="/"
@@ -138,7 +132,17 @@ export const App = () => {
           path="/confirmation"
           element={<Confirmation setCart={setCart} />}
         />
-        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route
+          path="/login"
+          element={
+            <Login
+              setToken={(t, admin) => {
+                setToken(t);
+                setIsAdmin(admin);
+              }}
+            />
+          }
+        />
         <Route
           path="/favorites"
           element={
@@ -146,6 +150,36 @@ export const App = () => {
               favorites={favorites}
               removeFromFavorites={removeFromFavorites}
             />
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            isAdmin === 1 ? (
+              <Products token={token} admin={isAdmin} />
+            ) : (
+              <Gallery
+                addToCart={addToCart}
+                addToFavorites={addToFavorites}
+                removeFromFavorites={removeFromFavorites}
+                favorites={favorites}
+              />
+            )
+          }
+        />
+        <Route
+          path="/admin/newproducts"
+          element={
+            isAdmin === 1 ? (
+              <NewProducts token={token} admin={isAdmin} />
+            ) : (
+              <Gallery
+                addToCart={addToCart}
+                addToFavorites={addToFavorites}
+                removeFromFavorites={removeFromFavorites}
+                favorites={favorites}
+              />
+            )
           }
         />
       </Routes>

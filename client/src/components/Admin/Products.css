@@ -1,0 +1,155 @@
+.admin-container {
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.main-content {
+  display: flex;
+  gap: 20px;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #a5a58d;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar ul li {
+  list-style: none;
+  margin: 12px 0;
+}
+
+.sidebar ul li a {
+  display: block;
+  color: #fffbf2;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+  background-color: #6b705c;
+}
+
+.content-area {
+  padding: 20px;
+  flex-grow: 1;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  background-color: #a5a58d;
+  padding: 16px 20px;
+  color: #193623;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.btn {
+  background-color: #a6a69d;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #a5a58d;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  padding: 12px 14px;
+  border: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+thead tr {
+  background-color: #a5a58d;
+  color: #fff;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #fffbf2;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+/* Responsivt */
+@media (max-width: 992px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .sidebar ul li {
+    display: inline-block;
+    margin: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar ul li {
+    display: block;
+    margin: 6px 0;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
