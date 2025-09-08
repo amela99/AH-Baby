@@ -15,6 +15,13 @@ import Login from "./components/Login/Login";
 import Favorites from "./components/Favorites/Favorites";
 import Products from "./components/Admin/Products";
 import NewProducts from "./components/Admin/NewProducts";
+import Categories from "./components/Admin/Categories";
+import NewCategories from "./components/Admin/NewCategories";
+import NotAuthorized from "./components/NotAuthorized/NotAuthorized";
+
+const AdminRoute = ({ isAdmin, children }) => {
+  return isAdmin === 1 ? children : <NotAuthorized />; // Visa innehållet endast om admin
+};
 
 export const App = () => {
   const [cart, setCart] = useState([]);
@@ -24,6 +31,16 @@ export const App = () => {
 
   useEffect(() => {
     fetchCart();
+    // Restore authentication state from localStorage
+    const savedToken = localStorage.getItem('token');
+    const savedIsAdmin = localStorage.getItem('isAdmin');
+    
+    if (savedToken) {
+      setToken(savedToken);
+    }
+    if (savedIsAdmin) {
+      setIsAdmin(parseInt(savedIsAdmin));
+    }
   }, []);
 
   const fetchCart = async () => {
@@ -88,6 +105,14 @@ export const App = () => {
     setFavorites((prev) => prev.filter((p) => p.id !== productId));
   };
 
+  // LOGOUT
+  const logout = () => {
+    setToken("");
+    setIsAdmin(0);
+    localStorage.removeItem('token');
+    localStorage.removeItem('isAdmin');
+  };
+
   return (
     <>
       <Header
@@ -96,6 +121,7 @@ export const App = () => {
         setToken={setToken}
         isAdmin={isAdmin}
         favorites={favorites}
+        logout={logout}
       />
       <Routes>
         <Route
@@ -139,6 +165,9 @@ export const App = () => {
               setToken={(t, admin) => {
                 setToken(t);
                 setIsAdmin(admin);
+                // Save to localStorage for persistence
+                localStorage.setItem('token', t);
+                localStorage.setItem('isAdmin', admin.toString());
               }}
             />
           }
@@ -155,31 +184,33 @@ export const App = () => {
         <Route
           path="/admin"
           element={
-            isAdmin === 1 ? (
+            <AdminRoute isAdmin={isAdmin}>
               <Products token={token} admin={isAdmin} />
-            ) : (
-              <Gallery
-                addToCart={addToCart}
-                addToFavorites={addToFavorites}
-                removeFromFavorites={removeFromFavorites}
-                favorites={favorites}
-              />
-            )
+            </AdminRoute>
           }
         />
         <Route
           path="/admin/newproducts"
           element={
-            isAdmin === 1 ? (
+            <AdminRoute isAdmin={isAdmin}>
               <NewProducts token={token} admin={isAdmin} />
-            ) : (
-              <Gallery
-                addToCart={addToCart}
-                addToFavorites={addToFavorites}
-                removeFromFavorites={removeFromFavorites}
-                favorites={favorites}
-              />
-            )
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/categories"
+          element={
+            <AdminRoute isAdmin={isAdmin}>
+              <Categories token={token} admin={isAdmin} />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/newcategories"
+          element={
+            <AdminRoute isAdmin={isAdmin}>
+              <NewCategories token={token} admin={isAdmin} />
+            </AdminRoute>
           }
         />
       </Routes>

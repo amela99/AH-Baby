@@ -1,54 +1,54 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./Products.css";
+import { Link, useNavigate } from "react-router-dom";
+import "./Categories.css";
 
-export const Products = ({ token, admin }) => {
-  const [products, setProducts] = useState([]);
+export const Categories = ({ token, admin }) => {
+  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchCategories = async () => {
       try {
-        const response = await fetch("/api/products", {
+        const response = await fetch("/api/categories", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (!response.ok) throw new Error("Failed to load products");
+        if (!response.ok) throw new Error("Failed to load categories");
         const data = await response.json();
-        setProducts(data);
+        setCategories(data);
       } catch (err) {
-        alert("Error loading products: " + err.message);
+        alert("Error loading categories: " + err.message);
       }
     };
 
-    if (token && parseInt(admin) === 1) {
-      fetchProducts();
+    // Om ej admin, skicka till denied
+    if (!token || parseInt(admin) !== 1) {
+      navigate("/denied");
+    } else {
+      fetchCategories();
     }
-  }, [token, admin]);
+  }, [token, admin, navigate]);
 
-  const deleteProduct = async (productId) => {
+  const deleteCategory = async (categoryId) => {
     const confirmed = window.confirm(
-      "Är du säker på att du vill ta bort denna produkt?"
+      "Är du säker på att du vill ta bort denna kategori?"
     );
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`/api/products/${productId}`, {
+      const response = await fetch(`/api/categories/${categoryId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
-        setProducts((prev) => prev.filter((p) => p.id !== productId));
-        alert("Product deleted successfully");
+        setCategories((prev) => prev.filter((c) => c.id !== categoryId));
+        alert("Kategori borttagen");
       } else {
-        alert("Failed to delete product");
+        alert("Kunde inte ta bort kategorin");
       }
     } catch (err) {
-      alert("Error deleting product: " + err.message);
+      alert("Error deleting category: " + err.message);
     }
   };
-
-  if (!token || parseInt(admin) !== 1) {
-    return <p>Du har inte behörighet att se denna sida.</p>;
-  }
 
   return (
     <div className="admin-container">
@@ -56,7 +56,7 @@ export const Products = ({ token, admin }) => {
         <div className="sidebar">
           <ul>
             <li>
-              <Link to="/admin/products">Produkter</Link>
+              <Link to="/admin">Produkter</Link>
             </li>
             <li>
               <Link to="/admin/categories">Kategorier</Link>
@@ -76,10 +76,10 @@ export const Products = ({ token, admin }) => {
           </div>
 
           <div className="content-section">
-            <h2 className="section-title">Produkter</h2>
+            <h2 className="section-title">Kategorier</h2>
             <div className="button-group">
-              <Link to="/admin/newproducts" className="btn">
-                Ny produkt
+              <Link to="/admin/newcategories" className="btn">
+                Ny kategori
               </Link>
             </div>
           </div>
@@ -87,23 +87,19 @@ export const Products = ({ token, admin }) => {
           <table>
             <thead>
               <tr>
-                <th>Titel</th>
-                <th>SKU</th>
-                <th>Pris</th>
-                <th></th>
+                <th>Kategori</th>
+                <th>Åtgärd</th>
               </tr>
             </thead>
             <tbody>
-              {products.length > 0 ? (
-                products.map((product, i) => (
+              {categories.length > 0 ? (
+                categories.map((category, i) => (
                   <tr key={i}>
-                    <td>{product.name}</td>
-                    <td>{product.SKU}</td>
-                    <td>{product.price}</td>
+                    <td>{category.name}</td>
                     <td>
                       <button
                         className="btn"
-                        onClick={() => deleteProduct(product.id)}
+                        onClick={() => deleteCategory(category.id)}
                       >
                         🗑️
                       </button>
@@ -112,7 +108,7 @@ export const Products = ({ token, admin }) => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4">Inga produkter tillgängliga</td>
+                  <td colSpan="2">Inga kategorier tillgängliga</td>
                 </tr>
               )}
             </tbody>
@@ -123,4 +119,4 @@ export const Products = ({ token, admin }) => {
   );
 };
 
-export default Products;
+export default Categories;

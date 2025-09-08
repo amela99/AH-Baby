@@ -3,11 +3,26 @@ const router = express.Router();
 const Database = require("better-sqlite3");
 const db = new Database("db/database.db");
 
+// Logga alla requests
 router.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 });
 
+// Hjälpfunktion: parsa kategorier
+function parseCategories(product) {
+  let cats = [];
+  if (product.categories) {
+    try {
+      cats = JSON.parse(product.categories);
+    } catch {
+      cats = [product.categories]; // fallback
+    }
+  }
+  return { ...product, categories: cats };
+}
+
+// Hämta alla produkter
 router.get("/", (req, res) => {
   try {
     const stmt = db.prepare("SELECT * FROM products");
@@ -18,7 +33,7 @@ router.get("/", (req, res) => {
   }
 });
 
-//  Hämta flicka + unisex
+// Hämta flicka + unisex
 router.get("/flicka", (req, res) => {
   try {
     const stmt = db.prepare(`
@@ -32,7 +47,7 @@ router.get("/flicka", (req, res) => {
   }
 });
 
-//  Hämta pojke + unisex
+// Hämta pojke + unisex
 router.get("/pojke", (req, res) => {
   try {
     const stmt = db.prepare(`
@@ -46,6 +61,7 @@ router.get("/pojke", (req, res) => {
   }
 });
 
+// Hämta produkt via url_slug
 router.get("/:url_slug", (req, res) => {
   try {
     const stmt = db.prepare("SELECT * FROM products WHERE url_slug = ?");
@@ -60,6 +76,7 @@ router.get("/:url_slug", (req, res) => {
   }
 });
 
+// Skapa ny produkt
 router.post("/", (req, res) => {
   const { name, description, image, SKU, price, published_date, categories } =
     req.body;
@@ -74,6 +91,7 @@ router.post("/", (req, res) => {
   ) {
     return res.status(400).json({ error: "Missing required fields" });
   }
+
   try {
     const stmt = db.prepare(`
       INSERT INTO products (name, description, image, SKU, price, published_date, categories)
@@ -103,6 +121,7 @@ router.post("/", (req, res) => {
   }
 });
 
+// Ta bort produkt
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 

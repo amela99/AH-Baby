@@ -1,17 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./NewProducts.css";
-
-const categoryList = [
-  "Bodies",
-  "Starter Kits",
-  "Kostymer",
-  "Klänningar",
-  "Jumpsuits",
-  "Nappar",
-  "Filtar",
-  "Snuttefiltar",
-];
 
 const NewProducts = ({ token, admin }) => {
   const [name, setName] = useState("");
@@ -21,8 +10,24 @@ const NewProducts = ({ token, admin }) => {
   const [publishedDate, setPublishedDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [imageFileName, setImageFileName] = useState("");
+  const [categoryList, setCategoryList] = useState([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/categories");
+        if (!response.ok) throw new Error("Kunde inte hämta kategorier");
+        const data = await response.json();
+        setCategoryList(data.map((c) => c.name));
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleFileChange = (e) => {
     setImageFileName(e.target.files[0]?.name || "");
@@ -76,10 +81,10 @@ const NewProducts = ({ token, admin }) => {
         <div className="sidebar">
           <ul>
             <li>
-              <a href="/admin">Produkter</a>
+              <Link to="/admin">Produkter</Link>
             </li>
             <li>
-              <a href="#">Kategorier</a>
+              <Link to="/admin/categories">Kategorier</Link>
             </li>
             <li>
               <a href="#">Kundhantering</a>

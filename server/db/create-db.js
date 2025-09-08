@@ -20,6 +20,14 @@ const createTable = `
   );
 `;
 
+// === Categories table ===
+const createCategories = `
+  CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE
+  );
+`;
+
 // === Orders table ===
 const createOrders = `
   CREATE TABLE IF NOT EXISTS orders (
@@ -62,6 +70,7 @@ const createUsers = `
 
 try {
   db.prepare(createTable).run();
+  db.prepare(createCategories).run();
   db.prepare(createOrders).run();
   db.prepare(createCustomerOrders).run();
   db.prepare(createUsers).run();
