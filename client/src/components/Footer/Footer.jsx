@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "./Footer.css";
 
 export const Footer = () => {
-  const [isMobile, setIsMobile] = useState(
-    window.matchMedia("(max-width: 544px)").matches
+  const isMobileInitial = window.matchMedia("(max-width: 544px)").matches;
+  const [isMobile, setIsMobile] = useState(isMobileInitial);
+  const [openColumns, setOpenColumns] = useState(
+    isMobileInitial ? [false, false, false] : [true, true, true]
   );
-  const [openColumns, setOpenColumns] = useState([false, false, false]);
 
   useEffect(() => {
     const mql = window.matchMedia("(max-width: 544px)");
     const handleResize = (e) => {
       setIsMobile(e.matches);
-      if (!e.matches) {
-        setOpenColumns([true, true, true]); // desktop: allt öppet
-      }
+      setOpenColumns(e.matches ? [false, false, false] : [true, true, true]);
     };
     mql.addEventListener("change", handleResize);
     return () => mql.removeEventListener("change", handleResize);
@@ -31,21 +29,22 @@ export const Footer = () => {
   return (
     <footer>
       <div className="footer-container">
-        <div class="baby-club">
+        <div className="baby-club">
           <h2>Baby Club</h2>
           <p>
             Som medlem i Baby Club får du 10% rabatt på ditt första köp. Du får
             unika erbjudanden, alltid fri frakt (till ombud) vid köp över 500 kr
             samt samlar poäng på alla köp och aktiviteter.
           </p>
-          <button class="join-button">Bli medlem →</button>
+          <button className="join-button">Bli medlem →</button>
           <h3>Följ oss på</h3>
           <a
             href="https://github.com/amela99"
             target="_blank"
-            class="social-icon"
+            rel="noopener noreferrer"
+            className="social-icon"
           >
-            <i class="fa-brands fa-github"></i>
+            <i className="fa-brands fa-github"></i>
           </a>
         </div>
         <div className="footer-links">
